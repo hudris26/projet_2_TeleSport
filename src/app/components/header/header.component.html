@@ -1,0 +1,23 @@
+<header>
+  <div>
+      <h1>Olympic games app</h1>
+      <hr/>
+  </div>
+  <div>
+    @if (titlePage){
+      <div class="center title-page">
+        <h2>{{ titlePage }}</h2>
+      </div>
+      }
+    @if (kpis) {
+      <div class="kpis split">
+        @for (kpi of kpis; track kpi) {
+          <div class="card-kpi">
+            <h3>{{ kpi.label }}</h3>
+            <p>{{ kpi.value }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</header>

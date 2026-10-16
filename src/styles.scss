@@ -8,7 +8,7 @@
     justify-content: center;
     margin: 5px;
 
-    div {
+    h2 {
         background: #0b868f;
         padding: 10px;
         border-radius: 10px;
@@ -24,18 +24,19 @@
     margin: 5px;
 
     div {
+        text-align: center;
         padding: 10px;
         border: solid #0b868f 1px;
         border-radius: 10px;
         color: gray;
         margin: 0px;
 
-        p {
+        h3 {
             text-align: center;
             margin: 0;
         }
 
-        p:last-child {
+        p {
             font-weight: bold;
             color: black;
         }
