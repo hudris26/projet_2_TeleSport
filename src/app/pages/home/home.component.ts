@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
   public error!:string
   titlePage = "Medals per Country";
   public kpis: Kpi[] = [];
+  public loading = true;
+
 
 
   constructor(private router: Router, private dataService: DataService) { }
@@ -24,6 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.dataService.getOlympics().subscribe(
       (data) => {
+        this.loading = false;
         if (data && data.length > 0) {
           this.totalJOs = new Set(
             data
@@ -39,10 +42,12 @@ export class HomeComponent implements OnInit {
             { label: 'Number of countries', value: this.totalCountries.toString() },
             { label: 'Number of JOs', value: this.totalJOs.toString() }
           ];
+        }else {
+          this.error = 'Aucune donnée n\'est disponible';
         }
       },
       (error:HttpErrorResponse) => {
-        console.log(`erreur : ${error}`);
+        this.loading = false;
         this.error = error.message
       }
     )

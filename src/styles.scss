@@ -43,3 +43,16 @@
     }
 }
 
+@media (max-width: 767px) {
+  .split {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .split > div {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+

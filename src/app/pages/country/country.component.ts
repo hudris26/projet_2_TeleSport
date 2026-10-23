@@ -1,6 +1,6 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import Chart from 'chart.js/auto';
 import { DataService } from '../../services/data.service';
 import { Kpi } from '../../models/kpi';
@@ -20,29 +20,31 @@ export class CountryComponent implements OnInit {
   public totalAthletes = 0;
   public error!: string;
   public kpis: Kpi[] = [];
+  public isLoading = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private dataService: DataService) {
+  constructor(private route: ActivatedRoute, private dataService: DataService) {
   }
 
   ngOnInit() {
-    let countryName: string | null = null
-    this.route.paramMap.subscribe((param: ParamMap) => countryName = param.get('countryName'));
+    const countryName = this.route.snapshot.paramMap.get('countryName');
     this.dataService.getOlympics().subscribe(
       (data) => {
+        this.isLoading = false;
         if (data && data.length > 0) {
           const selectedCountry = data.find((olympicCountry) => olympicCountry.country === countryName);
               if (!selectedCountry) {
+                this.error = `Le pays "${countryName}" est introuvable.`;
                 return;
               }
           this.titlePage = selectedCountry.country;
           const participations = selectedCountry.participations;
           this.totalParticipations = participations.length;
-          const years = selectedCountry.participations.map(i => i.year) ?? [];
+          const years = participations.map(participation => participation.year);
           const medalCountsPerParticipation = selectedCountry.participations.map(
             participation => participation.medalsCount
           );
           this.totalMedals = medalCountsPerParticipation.reduce((accumulator, item) => accumulator + item, 0);
-          const nbAthletes = selectedCountry.participations.map((i) => i.athleteCount ?? 0);
+          const nbAthletes = selectedCountry.participations.map((participation) => participation.athleteCount ?? 0);
           this.totalAthletes = nbAthletes.reduce((accumulator, item) => accumulator + item, 0);
           this.buildChart(years, medalCountsPerParticipation);
           this.kpis = [
@@ -53,7 +55,8 @@ export class CountryComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        this.error = error.message
+        this.isLoading = false;
+        this.error = error.message;
       }
     );
   }

@@ -1,12 +1,17 @@
-<div>
+@if (isLoading){
+  <app-loading></app-loading>
+} @else if (error) {
+  <app-error [message]="error"></app-error>
+} @else{
   <app-header [titlePage]="titlePage" [kpis]="kpis"></app-header>
-  <div class="chart-container wrapper-container">
-    <div class="container">
-      <canvas id="countryChart">{{ lineChart }}</canvas>
-      <h2>Date</h2>
-    </div>
-  </div>
-  <div class="center">
-    <a routerLink="">Go back</a>
+}
+<div class="chart-container wrapper-container">
+  <div class="container">
+    <canvas id="countryChart">{{ lineChart }}</canvas>
+    <h2>Date</h2>
   </div>
 </div>
+<div class="center">
+  <a routerLink="">Go back</a>
+</div>
+
