@@ -1,29 +1,52 @@
-# OlympicGamesStarter
+# TeleSport - Jeux olympiques
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+Application front-end Angular permettant de consulter les médailles des pays aux Jeux olympiques et les statistiques d'un pays sélectionné.
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Fonctionnalités
 
-## Development server
+- Un tableau de bord présente le nombre de pays et d'éditions des Jeux olympiques, ainsi qu'un graphique circulaire des médailles par pays.
+- Un clic sur un pays ouvre sa page de détail avec ses participations, ses médailles, ses athlètes et l'évolution de ses médailles par édition.
+- Une page introuvable est affichée pour les URL inconnues ou les identifiants de pays invalides.
+- Des composants partagés affichent le titre et les indicateurs, le chargement et les erreurs.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Technologies
 
-## Build
+- Angular 18 et TypeScript
+- Chart.js pour les graphiques
+- RxJS et `HttpClient` pour la récupération asynchrone des données
+- Données de démonstration dans `src/assets/mock/olympic.json`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Installation et démarrage
 
-## Where to start
+```bash
+npm install
+npm start
+```
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+Ouvrir ensuite `http://localhost:4200/`.
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+## Commandes
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+```bash
+npm run build
+npm run lint
+npm test -- --watch=false
+```
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+## Structure du projet
 
-You're now ready to implement the requested features.
+```text
+src/
+├── app/
+│   ├── components/   # Header, chargement et erreur partagés
+│   ├── models/       # Interfaces Olympic, Participation et Kpi
+│   ├── pages/        # Tableau de bord, détail pays et page introuvable
+│   └── services/     # Accès centralisé aux données
+└── assets/mock/      # Données JSON simulées
+```
 
-Good luck!
+## Organisation des données
+
+`DataService` centralise la lecture du fichier JSON et retourne des données typées avec l'interface `Olympic`. Les pages utilisent ce service, calculent les indicateurs propres à leur affichage et configurent leurs graphiques. Le composant `HeaderComponent` est partagé entre le tableau de bord et la page de détail.
+
+Les données sont actuellement simulées par un fichier JSON. Pour connecter une future API, la source de données pourra être remplacée dans `DataService` sans déplacer les appels HTTP dans les pages.
