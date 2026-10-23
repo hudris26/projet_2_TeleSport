@@ -6,12 +6,10 @@
 <app-header [titlePage]="titlePage" [kpis]="kpis"></app-header>
 }
 <div class="chart-container">
-  <canvas id="DashboardPieChart">{{ pieChart }}</canvas>
-  <canvas
-    id="DashboardPieChart"
-    role="img"
+  <canvas 
+    id="DashboardPieChart" 
     aria-label="Graphique circulaire du nombre total de médailles par pays. Cliquez sur un pays pour afficher ses détails.">
-    Graphique circulaire du nombre total de médailles par pays. Cliquez sur un pays pour afficher ses détails.
+    Graphique circulaire du nombre total de médailles par pays. Cliquez sur un pays pour afficher ses détails.>{{ pieChart }}
   </canvas>
 </div>
 

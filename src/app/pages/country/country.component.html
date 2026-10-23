@@ -6,17 +6,10 @@
   <app-header [titlePage]="titlePage" [kpis]="kpis"></app-header>
 }
 
-@if (lineChart.data.datasets.length === 0) {
-  <app-error [message]="'Aucune donnée n\'est disponible pour ce pays.'"></app-error>
-} 
-
-
 <div class="chart-container wrapper-container">
   <div class="container">
     <canvas id="countryChart">{{ lineChart }}</canvas>
-    @if(error) {
     <h2>Date</h2>
-    }
   </div>
 </div>
 <div class="center">
