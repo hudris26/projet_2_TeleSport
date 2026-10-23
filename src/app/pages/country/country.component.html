@@ -1,7 +1,10 @@
 @if (isLoading){
   <app-loading></app-loading>
 } @else if (error) {
-  <app-error [message]="error"></app-error>
+  <app-error
+    title="Page indisponible"
+    [message]="error">
+  </app-error>
 } @else{
   <app-header [titlePage]="titlePage" [kpis]="kpis"></app-header>
 }

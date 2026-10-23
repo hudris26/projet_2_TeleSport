@@ -36,7 +36,9 @@ export class CountryComponent implements OnInit {
             (olympicCountry) => olympicCountry.id === countryId,
           );
           if (!selectedCountry) {
-            this.router.navigate(['/not-found']);
+            this.router.navigate(['/not-found'], {
+              queryParams: { type: 'country', id: countryId },
+            });
             return;
           }
           this.titlePage = selectedCountry.country;

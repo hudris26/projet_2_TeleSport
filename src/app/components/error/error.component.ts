@@ -9,5 +9,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './error.component.scss'
 })
 export class ErrorComponent {
+  @Input() title = 'Erreur';
   @Input() message = '';
 }
