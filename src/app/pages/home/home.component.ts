@@ -34,10 +34,11 @@ export class HomeComponent implements OnInit {
               .flat()
           ).size;
           const countries = data.map(olympicCountry => olympicCountry.country);
+          const countryIds = data.map(country => country.id);
           this.totalCountries = countries.length;
           const medals = data.map(olympicCountry => olympicCountry.participations.map(participation => participation.medalsCount));
           const sumOfAllMedalsYears = medals.map(countryMedals => countryMedals.reduce((total, medalCount) => total + medalCount, 0));
-          this.buildPieChart(countries, sumOfAllMedalsYears);
+          this.buildPieChart(countries, sumOfAllMedalsYears, countryIds);
           this.kpis = [
             { label: 'Number of countries', value: this.totalCountries.toString() },
             { label: 'Number of JOs', value: this.totalJOs.toString() }
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  buildPieChart(countries: string[], sumOfAllMedalsYears: number[]) {
+  buildPieChart(countries: string[], sumOfAllMedalsYears: number[], countryIds: number[]) {
     const pieChart = new Chart("DashboardPieChart", {
       type: 'pie',
       data: {
@@ -72,8 +73,9 @@ export class HomeComponent implements OnInit {
             const points = pieChart.getElementsAtEventForMode(e.native, 'point', { intersect: true }, true)
             if (points.length) {
               const firstPoint = points[0];
-              const countryName = pieChart.data.labels ? pieChart.data.labels[firstPoint.index] : '';
-              this.router.navigate(['country', countryName]);
+              // const countryName = pieChart.data.labels ? pieChart.data.labels[firstPoint.index] : '';
+              const countryId = countryIds[firstPoint.index];
+              this.router.navigate(['/country', countryId]);
             }
           }
         }
